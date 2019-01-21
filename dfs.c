@@ -11,6 +11,11 @@ int visited[6];
 
 void dfs(int n);
 
+int stack[5];
+int top = -1;
+
+void dfs2(int n);
+
 int main(void) 
 {
 	scanf("%d %d", &V, &E);
@@ -21,8 +26,30 @@ int main(void)
 		adj[n1][n2] = 1;
 		// adj[n2][n1] = 1; // 방향성이 없는 경우 
 	}
-	dfs(1); 
+	//dfs(1);
+	dfs2(1); 
 	return 0;
+}
+
+void dfs2(int n)
+{
+	// 시작노드 push, 방문처리 
+	stack[++top] = n; // push()
+	visited[n] = 1;
+	// 반복
+	while(top != -1)
+	{
+		n = stack[top--]; 	// pop()
+		printf("%d ", n);	// 노드번호 표시
+		for(int i = 1; i <=V; i++)
+		{
+			if((adj[n][i] != 0) && (visited[i] == 0))
+			{
+				stack[++top] = i;
+				visited[i] = 1;
+			}
+		}
+	} 
 }
 
 void dfs(int n)
