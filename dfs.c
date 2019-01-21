@@ -21,6 +21,10 @@ int dfs3(int n, int k); // k번 노드에 도착할 수 있으면 1, 아니면 0
 int cnt;
 void dfs4(int n, int k);
 
+int minE = 10; // 만약 E<10 이라면
+int maxE = 0;
+void dfs5(int n, int k, int e);
+
 int main(void) 
 {
 	scanf("%d %d", &V, &E);
@@ -34,10 +38,37 @@ int main(void)
 	//dfs(1);
 	//dfs2(1);
 	//printf("%d\n", dfs3(5, 3));
-	dfs4(1, 4);
-	printf("%d\n", cnt);
+//	dfs4(1, 4);
+//	printf("%d\n", cnt);
+	dfs5(1, 4, 0);
+	printf("%d %d\n", minE, maxE);
 	return 0;
 }
+// e: n에 도착하기까지 지나온 간선 수 
+void dfs5(int n, int k, int e)
+{
+	if(n == k) // 목적지 노드에 도착 
+	{
+		if(minE > e)
+			minE = e;
+		if(maxE < e)
+			maxE = e;
+	}
+	else
+	{
+		visited[n] = 1; // n번이후에 n번으로 진입 방지 
+		for(int i = 1; i <= V; i++)
+		{
+			if((adj[n][i] != 0) && (visited[i] == 0))
+			{
+				dfs5(i, k, e+1);
+			}
+		}
+		visited[n] = 0;	// n번 이전에서 n번으로 진입 허용 
+	}
+}
+
+
 // n에서 k로가는 경로의  수 
 void dfs4(int n, int k)
 {
