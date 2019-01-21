@@ -18,6 +18,9 @@ void dfs2(int n);
 
 int dfs3(int n, int k); // k번 노드에 도착할 수 있으면 1, 아니면 0 
 
+int cnt;
+void dfs4(int n, int k);
+
 int main(void) 
 {
 	scanf("%d %d", &V, &E);
@@ -26,13 +29,34 @@ int main(void)
 		int n1, n2;
 		scanf("%d %d", &n1, &n2);
 		adj[n1][n2] = 1;
-		// adj[n2][n1] = 1; // 방향성이 없는 경우 
+		//adj[n2][n1] = 1; // 방향성이 없는 경우 
 	}
 	//dfs(1);
 	//dfs2(1);
-	printf("%d\n", dfs3(5, 3)); 
+	//printf("%d\n", dfs3(5, 3));
+	dfs4(1, 4);
+	printf("%d\n", cnt);
 	return 0;
 }
+// n에서 k로가는 경로의  수 
+void dfs4(int n, int k)
+{
+	if(n == k) // 목적지 노드에 도착 
+		cnt++;
+	else
+	{
+		visited[n] = 1; // n번이후에 n번으로 진입 방지 
+		for(int i = 1; i <= V; i++)
+		{
+			if((adj[n][i] != 0) && (visited[i] == 0))
+			{
+				dfs4(i, k);
+			}
+		}
+		visited[n] = 0;	// n번 이전에서 n번으로 진입 허용 
+	}
+}
+
 // n에서 k로 가는 경로가 존재하는지 확인 
 int dfs3(int n, int k)
 {
