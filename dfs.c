@@ -16,6 +16,8 @@ int top = -1;
 
 void dfs2(int n);
 
+int dfs3(int n, int k); // k번 노드에 도착할 수 있으면 1, 아니면 0 
+
 int main(void) 
 {
 	scanf("%d %d", &V, &E);
@@ -27,8 +29,28 @@ int main(void)
 		// adj[n2][n1] = 1; // 방향성이 없는 경우 
 	}
 	//dfs(1);
-	dfs2(1); 
+	//dfs2(1);
+	printf("%d\n", dfs3(5, 3)); 
 	return 0;
+}
+// n에서 k로 가는 경로가 존재하는지 확인 
+int dfs3(int n, int k)
+{
+	if(n == k)
+		return 1;
+	else
+	{
+		visited[n] = 1;
+		for(int i = 1; i <= V; i++)
+		{
+			if((adj[n][i] != 0) && (visited[i] == 0))
+			{
+				if(dfs3(i, k) == 1)
+					return 1;
+			}
+		}
+		return 0;
+	}
 }
 
 void dfs2(int n)
