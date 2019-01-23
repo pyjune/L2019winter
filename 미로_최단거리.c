@@ -52,7 +52,7 @@ void find2(int r, int c, int e)
 			minV = e;
 	}
 //	else if(maze[r][c] == 1) // 벽이면 리턴 (진입 후 검사) 
-//		return 0;
+//		return;
 	else
 	{
 		maze[r][c] = 1; // 지나간 칸 표시 
